@@ -1,0 +1,86 @@
+ 	<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*,java.util.*"%>
+ <%@include file="Header.jsp" %>
+
+<html lang="en">
+<head>
+	<title>CHAT BOT|Add Question</title>
+	  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<script>
+    $(document).ready(function(){
+       $(".dropdown-toggle").dropdown();
+    });
+</script>
+<div class="panel-body">
+<div class="container">
+<br/><br/><br/><br/>
+	<div class="row">
+	<div class="col-sm-2"></div>
+	
+		<div class="col-sm-8">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-2"></div>
+		
+			
+			<form method="post">
+			<h1 style="font-family:Times New Roman;color:#ffffff;"><center>Add Question</center></h1>
+		    <div class="form-group"> 
+                <input type="text" class="form-control" name="ques" placeholder="Enter Question" required> 
+            </div> 
+
+            <div class="form-group"> 
+                <input type="text"class="form-control" name="answer" placeholder="Enter Answer" required> 
+            </div>  
+            
+                     <br/>
+                <center><input type="submit"  name="sub" value="Submit"/> </center>
+            
+          
+            </form>
+            
+		</div>
+		<div class="col-sm-2"></div>  
+	</div>
+</div>
+</div>
+<%
+String buttonclick=request.getParameter("sub");
+if(buttonclick!=null){
+String ques=request.getParameter("ques");
+String answer=request.getParameter("answer");
+
+
+try
+{
+Class.forName("com.mysql.jdbc.Driver");
+Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/chat_bot", "root","root");
+Statement st=conn.createStatement();
+
+int i=st.executeUpdate("insert into questions(question,answer)values('"+ques+"','"+answer+"')");
+%>
+<script>
+alert("Data Added Successfully");
+<%response.sendRedirect("");%>
+</script>
+<%
+
+}
+catch(Exception e)
+{
+System.out.print(e);
+e.printStackTrace();
+}
+}
+%>
+
+
+</body>
+</html>
